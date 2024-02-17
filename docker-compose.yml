@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  game_tg_service:
+    depends_on:
+      - game_postgres
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: game_tg_service
+  game_postgres:
+    image: postgres:latest
+    container_name: game_postgres
+    volumes:
+      - ./migrations/000001_init.up.sql:/docker-entrypoint-initdb.d/000001_init.up.sql
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_USER: "gameDbUser"
+      POSTGRES_DB: "gameDb"
+      POSTGRES_PASSWORD: "bebra"
+    restart: always
