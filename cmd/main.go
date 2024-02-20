@@ -1,6 +1,7 @@
 package main
 
 import (
+	"animals-game/internal/repository"
 	tg_bot "animals-game/internal/tg-bot"
 	"fmt"
 	"github.com/jmoiron/sqlx"
@@ -13,19 +14,7 @@ import (
 
 func main() {
 
-	time.Sleep(time.Second * 2)
-	/*
-		// testing work of db
-		tgId := "123"
-		username := "egores"
-		password_hash := "aboba"
-		animal_id := 1
-		data := `INSERT INTO users(username, telegram_id, password_hash, animal_id) VALUES($1, $2, $3, $4);`
-		fmt.Println("All's good 1")
-		//Выполняем наш SQL запрос
-		if _, err = db.Exec(data, username, tgId, password_hash, animal_id); err != nil {
-			log.Fatal(err)
-		}*/
+	time.Sleep(time.Second * 1)
 
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
@@ -42,12 +31,9 @@ func main() {
 
 	db, err := sqlx.Open("postgres", dbInfo)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	repo := repository.NewRepository(db)
 
-	TgBot := tg_bot.NewTgBot(os.Getenv("TELEGRAM_APITOKEN"))
-	TgBot.RepoInit(db)
+	TgBot := tg_bot.NewTgBot(os.Getenv("TELEGRAM_APITOKEN"), repo)
 
 	err = TgBot.Run()
 

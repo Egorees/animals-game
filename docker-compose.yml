@@ -17,9 +17,9 @@ services:
     volumes:
       - ./migrations/000001_init.up.sql:/docker-entrypoint-initdb.d/000001_init.up.sql
     ports:
-      - "5432"
+      - "5436:5432"
     environment:
       POSTGRES_USER: "gameDbUser"
       POSTGRES_DB: "gameDb"
-      POSTGRES_PASSWORD: DB_PASSWORD
+      POSTGRES_PASSWORD: "aboba"
     restart: always

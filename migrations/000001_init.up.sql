@@ -1,16 +1,17 @@
 CREATE TABLE IF NOT EXISTS users
 (
     id serial not null unique,
-    username varchar(255) not null unique,
-    telegram_id varchar(255) not null,
-    password_hash varchar(255) not null,
+    telegram_id bigint unique,
+    username varchar(255),
+    password_hash varchar(255),
     animal_id integer
 );
 
 CREATE TABLE IF NOT EXISTS animals
 (
     id serial not null unique,
-    type smallint,
+    type smallint not null,
     exp bigint,
-    owner_user_id integer
+    owner_id integer not null,
+    owner_telegram_id bigint not null
 );
