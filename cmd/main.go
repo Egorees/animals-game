@@ -2,7 +2,7 @@ package main
 
 import (
 	"animals-game/internal/repository"
-	tg_bot "animals-game/internal/tg-bot"
+	"animals-game/internal/tg-bot"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"

@@ -2,7 +2,6 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
-	"log"
 )
 
 type Repository struct {
@@ -18,7 +17,6 @@ func (repo *Repository) CreateUserWithTgId(tgId int64) error {
 	request := `INSERT INTO users(telegram_id) VALUES($1);`
 
 	if _, err := repo.db.Exec(request, tgId); err != nil {
-		log.Fatal(err)
 		return err
 	}
 	return nil

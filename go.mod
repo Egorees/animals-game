@@ -9,4 +9,5 @@ require (
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/lib/pq v1.10.9 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

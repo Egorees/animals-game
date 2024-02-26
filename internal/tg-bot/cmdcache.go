@@ -1,17 +1,8 @@
 package tg_bot
 
-import "time"
+import tgbot_addons "animals-game/pkg/tgbot-addons"
 
-// users commands ids
 const (
-	MainMenu    = 1
-	SetUsername = 2
+	mainMenu = tgbot_addons.CommandType(iota)
+	creatingAnimalStarted
 )
-
-// chats commands id's
-const ()
-
-type cmdCache struct {
-	lastCmd int16
-	cmdTime time.Time
-}

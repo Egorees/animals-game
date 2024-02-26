@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS animals
 (
     id serial not null unique,
+    name varchar(255),
     type smallint not null,
     exp bigint,
     owner_id integer not null,
