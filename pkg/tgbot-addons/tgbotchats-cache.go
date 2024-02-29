@@ -2,18 +2,18 @@ package tgbot_addons
 
 import "time"
 
-type CommandType int16
+type StatusType int16
 
 type ChatCache struct {
-	Command         CommandType
+	Command         StatusType
 	InteractionTime time.Time
 	OtherInfo       interface{}
 }
 
-func SetCache(cmd CommandType, interactionTime time.Time, otherInfo interface{}) ChatCache {
+func SetCache(cmd StatusType, otherInfo interface{}) ChatCache {
 	return ChatCache{
 		Command:         cmd,
-		InteractionTime: interactionTime,
+		InteractionTime: time.Now(),
 		OtherInfo:       otherInfo,
 	}
 }

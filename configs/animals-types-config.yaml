@@ -1,0 +1,5 @@
+AnimalsTypes:
+  - AnimalType: "кот"
+  - AnimalType: "заяц"
+  - AnimalType: "дракон"
+  - AnimalType: "единорог"

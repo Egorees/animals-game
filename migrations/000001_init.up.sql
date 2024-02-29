@@ -13,6 +13,5 @@ CREATE TABLE IF NOT EXISTS animals
     name varchar(255),
     type smallint not null,
     exp bigint,
-    owner_id integer not null,
-    owner_telegram_id bigint not null
+    owner_id integer not null
 );

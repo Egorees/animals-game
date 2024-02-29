@@ -1,4 +1,4 @@
-package configs
+package bot_configs
 
 import (
 	"gopkg.in/yaml.v3"
@@ -16,7 +16,7 @@ type StickersConfig struct {
 	StickerExample string           `yaml:"StickerExample"`
 }
 
-func ParseStickersConfig(filepath string) StickersConfig {
+func ParseStickersConfig(filepath string) *StickersConfig {
 	file, err := os.Open(filepath)
 	if err != nil {
 		slog.Error("Error during opening stickers config: %v", err.Error())
@@ -34,7 +34,7 @@ func ParseStickersConfig(filepath string) StickersConfig {
 		slog.Error("Error during parsing stickers config: %v", err.Error())
 		panic(err)
 	}
-	return res
+	return &res
 }
 
 func (stickersCfg *StickersConfig) GetAnimaTypeByStickerID(stickerID string) string {
@@ -43,5 +43,5 @@ func (stickersCfg *StickersConfig) GetAnimaTypeByStickerID(stickerID string) str
 			return sticker.AnimalType
 		}
 	}
-	return "notCool:(" // todo: think how handle other stickers
+	return "" // todo: think how handle other stickers
 }

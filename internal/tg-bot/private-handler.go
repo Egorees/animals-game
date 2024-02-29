@@ -1,11 +1,10 @@
 package tg_bot
 
 import (
-	tgbotmethods "animals-game/pkg/tgbot-addons"
+	tgbotaddons "animals-game/pkg/tgbot-addons"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log/slog"
-	"time"
 )
 
 const (
@@ -36,27 +35,26 @@ func privateMessageHandler(tgBot TgBot, msg *tgbotapi.Message) {
 			createAnimalHandler(tgBot, msg)
 		case cancel: //todo: realise cancel handler
 		}
+		return
 	}
 
 	switch tgBot.chatsCache[msg.Chat.ID].Command {
 	case mainMenu:
-
+		// todo: think how answering on usual msg
+	case waitAnimalType:
+		setAnimalType(tgBot, msg)
+	case waitAnimalName:
+		setAnimalName(tgBot, msg)
+	case waitAcceptAnimalInfo:
+		acceptAnimalFeatures(tgBot, msg)
 	default:
-		slog.Info("Unknown command:", tgBot.chatsCache[msg.Chat.ID].Command)
-	}
-
-	if msg.Sticker != nil {
-		//testing todo: remove this
-		answerText := fmt.Sprintf("Твое животное: %s!", stickersConfig.GetAnimaTypeByStickerID(msg.Sticker.FileUniqueID))
-		answerMsg := tgbotapi.NewMessage(msg.Chat.ID, answerText)
-		answerMsg.ReplyToMessageID = msg.MessageID
-		tgbotmethods.SendMsg(tgBot.bot, answerMsg)
+		slog.Info("Unknown command type:", tgBot.chatsCache[msg.Chat.ID].Command)
 	}
 }
 
 func startHandler(tgBot TgBot, msg *tgbotapi.Message) {
 
-	tgBot.chatsCache[msg.Chat.ID] = tgbotmethods.SetCache(mainMenu, time.Now(), nil) // set cache for chat
+	tgBot.chatsCache[msg.Chat.ID] = tgbotaddons.SetCache(mainMenu, nil) // set cache for chat
 
 	err := tgBot.repo.CreateUserWithTgId(msg.From.ID)
 
@@ -80,5 +78,5 @@ func startHandler(tgBot TgBot, msg *tgbotapi.Message) {
 	answerMsg := tgbotapi.NewMessage(msg.Chat.ID, answerText)
 	answerMsg.ReplyToMessageID = msg.MessageID
 
-	tgbotmethods.SendMsg(tgBot.bot, answerMsg)
+	tgbotaddons.SendMsg(tgBot.bot, answerMsg)
 }

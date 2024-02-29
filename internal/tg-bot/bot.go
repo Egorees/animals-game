@@ -1,9 +1,9 @@
 package tg_bot
 
 import (
-	"animals-game/configs"
 	"animals-game/internal/repository"
-	tgbot_addons "animals-game/pkg/tgbot-addons"
+	tgbotaddons "animals-game/pkg/tgbot-addons"
+	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log/slog"
 )
@@ -11,7 +11,7 @@ import (
 type TgBot struct {
 	bot        *tgbotapi.BotAPI
 	repo       *repository.Repository
-	chatsCache map[int64]tgbot_addons.ChatCache
+	chatsCache map[int64]tgbotaddons.ChatCache
 }
 
 func NewTgBot(token string, repo *repository.Repository) TgBot {
@@ -22,13 +22,13 @@ func NewTgBot(token string, repo *repository.Repository) TgBot {
 	return TgBot{
 		bot:        bot,
 		repo:       repo,
-		chatsCache: map[int64]tgbot_addons.ChatCache{},
+		chatsCache: map[int64]tgbotaddons.ChatCache{},
 	}
 }
 
 func (tgBot TgBot) Run() error {
-	botConfig := configs.ParseBotConfig("./configs/tgbot-config.yaml")
-	stickersConfig = configs.ParseStickersConfig("./configs/animals-stickers-config.yaml")
+
+	initConfigs()
 
 	updateConfig := tgbotapi.NewUpdate(botConfig.Offset)
 	updateConfig.Timeout = botConfig.Timeout
@@ -48,4 +48,11 @@ func (tgBot TgBot) Run() error {
 		}
 	}
 	return nil
+}
+
+func SendErrorResponse(tgBot TgBot, chatId int64) {
+	answerText := fmt.Sprintf("Что-то пошло не так, напиши %s.", techSupportTg)
+	answerMsg := tgbotapi.NewMessage(chatId, answerText)
+	tgbotaddons.SendMsg(tgBot.bot, answerMsg)
+	return
 }

@@ -1,4 +1,4 @@
-package configs
+package bot_configs
 
 import (
 	"gopkg.in/yaml.v3"
